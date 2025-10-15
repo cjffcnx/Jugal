@@ -15,10 +15,10 @@
     <script>
         const ORDER_ENDPOINT = '';
         const OWNER_EMAIL = 'rajendragajurel33@gmail.com';
-        function buildGmailUrl(data) {
+        function buildMailtoUrl(data) {
             const subject = encodeURIComponent('New Order from ' + (data.name || 'Customer'));
             const body = encodeURIComponent(`Name: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\n\nService: ${data.service}\nSize/Details: ${data.details}\nQuantity: ${data.qty}\n\nNotes:\n${data.notes}`);
-            return `https://mail.google.com/mail/?view=cm&fs=1&to=${OWNER_EMAIL}&su=${subject}&body=${body}`;
+            return `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
         }
         async function submitOrder(e) {
             e.preventDefault();
@@ -31,7 +31,8 @@
                     if (res.ok) { alert('Thank you! Your order has been sent.'); form.reset(); return; }
                 } catch (err) { }
             }
-            window.open(buildGmailUrl(data), '_blank');
+            // Use window.location.href for mailto: to properly open device's default email app
+            window.location.href = buildMailtoUrl(data);
         }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
