@@ -1,0 +1,10 @@
+/* Services page additional styling */
+.caption {
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.card h3 {
+    margin-top: 6px;
+}

@@ -1,0 +1,28 @@
+/* FAQ page styling layered over theme.css */
+body {
+    background-image: url(mygif.gif);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.faq {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.question {
+    margin-bottom: 16px;
+}
+
+.question.card {
+    display: block
+}
+
+.question .btn {
+    margin: 6px 0;
+}
+
+.answer {
+    color: var(--primary);
+    margin-top: 6px;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Place an Order - Jugal Glass and Framing Center</title>
+    <link rel="stylesheet" href="theme.css" />
+    <style>
+        .order-wrap {
+            max-width: 900px;
+            margin: 0 auto
+        }
+    </style>
+    <script>
+        const ORDER_ENDPOINT = '';
+        const OWNER_EMAIL = 'rajendragajurel33@gmail.com';
+        function buildGmailUrl(data) {
+            const subject = encodeURIComponent('New Order from ' + (data.name || 'Customer'));
+            const body = encodeURIComponent(`Name: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\n\nService: ${data.service}\nSize/Details: ${data.details}\nQuantity: ${data.qty}\n\nNotes:\n${data.notes}`);
+            return `https://mail.google.com/mail/?view=cm&fs=1&to=${OWNER_EMAIL}&su=${subject}&body=${body}`;
+        }
+        async function submitOrder(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+            if (!data.name || !data.phone || !data.service) { alert('Please fill Name, Phone and Service.'); return; }
+            if (ORDER_ENDPOINT) {
+                try {
+                    const res = await fetch(ORDER_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    if (res.ok) { alert('Thank you! Your order has been sent.'); form.reset(); return; }
+                } catch (err) { }
+            }
+            window.open(buildGmailUrl(data), '_blank');
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container site-nav">
+            <a href="index.html" class="brand">
+                <img src="glass-removebg-preview.png" alt="Logo" />
+                <span>Jugal Glass and Framing Center</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-cta">
+                <div class="nav-links" id="primary-nav">
+                    <a href="index.html">Home</a>
+                    <a href="About.html">About</a>
+                    <a href="Services.html">Services</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="Order.html">Order</a>
+                </div>
+                <a class="phone-cta" href="tel:+9779841330730"><i class="fa-solid fa-phone"></i> Call</a>
+            </nav>
+        </div>
+    </header>
+    <main class="section">
+        <div class="container order-wrap">
+            <h1 class="section-title">Place an Order</h1>
+            <p class="lead">Tell us what you need and we’ll get back to you with details and pricing.</p>
+            <form class="card form" onsubmit="submitOrder(event)">
+                <div class="grid grid-2">
+                    <div class="field"><label for="name">Full name</label><input id="name" name="name" class="input"
+                            type="text" required /></div>
+                    <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" class="input"
+                            type="tel" required /></div>
+                </div>
+                <div class="grid grid-2">
+                    <div class="field"><label for="email">Email (optional)</label><input id="email" name="email"
+                            class="input" type="email" /></div>
+                    <div class="field">
+                        <label for="service">Service</label>
+                        <select id="service" name="service" class="input" required>
+                            <option value="">Select a service</option>
+                            <option>Glass cutting</option>
+                            <option>Mirror</option>
+                            <option>Frames</option>
+                            <option>Window/Door Packaging</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-2">
+                    <div class="field"><label for="details">Size / Details</label><input id="details" name="details"
+                            class="input" type="text" /></div>
+                    <div class="field"><label for="qty">Quantity</label><input id="qty" name="qty" class="input"
+                            type="number" min="1" value="1" /></div>
+                </div>
+                <div class="field"><label for="notes">Additional notes</label><textarea id="notes" name="notes"
+                        class="input" rows="4"></textarea>
+                    <div class="help">After clicking the send order you will be redirected to your gmail and then after
+                        you send email we will reach you within call you back to confirm your order.</div>
+                </div>
+                <div class="form-actions"><button class="btn btn-primary" type="submit"><i
+                            class="fa-solid fa-paper-plane"></i> Send order</button><a class="btn"
+                        href="tel:+9779841330730"><i class="fa-solid fa-phone"></i> Call instead</a></div>
+            </form>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div><strong>Jugal Glass and Framing Center</strong>
+                <p class="muted">We’ll respond shortly with details.</p>
+            </div>
+            <div class="space-y"><a href="index.html">Home</a><a href="About.html">About</a><a
+                    href="Services.html">Services</a><a href="faq.html">FAQ</a><a href="Order.html">Order</a></div>
+        </div>
+        <div class="container copy">© <span id="year"></span> Jugal Glass and Framing Center</div>
+    </footer>
+    <script>
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.getElementById('primary-nav');
+        toggle?.addEventListener('click', () => {
+            const open = nav.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', String(open));
+        });
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script src="https://kit.fontawesome.com/0a117d2ad3.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
