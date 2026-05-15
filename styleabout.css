@@ -7,24 +7,20 @@ body {
 
 .text {
     opacity: 0;
-    /* Initially set opacity to 0 */
+    max-width: 600px;
+    text-align: left;
     animation: flyIn 1.5s ease-in-out forwards;
-    /* Animation properties */
 }
 
 @keyframes flyIn {
     0% {
         opacity: 0;
-        /* Start with opacity 0 */
         transform: translateY(-50px);
-        /* Start position above its final position */
     }
 
     100% {
         opacity: 1;
-        /* End with opacity 1 */
         transform: translateY(0);
-        /* Final position */
     }
 }
 
@@ -55,43 +51,19 @@ body {
 
 #ownerImage {
     transition: transform 0.3s ease;
-    /* Transition effect for smooth scaling */
 }
 
 #ownerImage:hover {
     transform: scale(1.2);
-    /* Adjust the scaling factor as needed */
-}
-
-.text {
-    max-width: 600px;
-    text-align: left;
 }
 
 .owner-name {
     font-weight: bold;
 }
 
-/* Add any additional styling as needed */
-/* location section handled on index */
-
 .text p {
-    color: #4a0b36;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-    animation: glow 1.5s infinite alternate;
-    /* Animation properties */
-}
-
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        /* Initial text shadow */
-    }
-
-    100% {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8);
-        /* Final text shadow, adjust as needed */
-    }
+    color: var(--text);
+    margin-top: 12px;
 }
 
 .location a {
